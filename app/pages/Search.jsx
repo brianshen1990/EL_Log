@@ -7,7 +7,7 @@ import ResultTable from '../components/Search/ResultTable.jsx'
 import FacetsBar from '../components/Search/FacetsBar.jsx'
 import ResultHistogram from  '../components/Search/ResultHistogram.jsx'
 
-import {SearchDataStore} from '../Store/Search/SearchData.js'
+import {SearchDataStore, SearchDataActions} from '../Store/Search/SearchData.js'
 
 class Search extends Reflux.Component{
 
@@ -18,7 +18,7 @@ class Search extends Reflux.Component{
     }
 
     componentDidMount() {
-        this.store.refresh_data();
+        SearchDataActions.RefreshData();
     }
 
     componentWillUnmount() {

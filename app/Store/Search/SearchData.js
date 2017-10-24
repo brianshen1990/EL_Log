@@ -201,6 +201,7 @@ const Helper = {
 
 }
 
+let SearchDataActions = Reflux.createActions(["RefreshData", "FacetsChanged"]);
 
 class SearchDataStore extends Reflux.Store{
 
@@ -214,8 +215,14 @@ class SearchDataStore extends Reflux.Store{
             histogram: Helper.get_histogram(),
             whole_hits : 0
         };
-        this.listenables= [];
+        this.listenables= [SearchDataActions];
     }
+
+    // Actions
+    onRefreshData(){
+        this.refresh_data();
+    }
+
 
     // Call to refresh data
     refresh_data() {
