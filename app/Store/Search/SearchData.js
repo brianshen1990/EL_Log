@@ -199,7 +199,7 @@ const Helper = {
         });
     }
 
-}
+};
 
 let SearchDataActions = Reflux.createActions(["RefreshData", "FacetsChanged"]);
 
@@ -223,6 +223,27 @@ class SearchDataStore extends Reflux.Store{
         this.refresh_data();
     }
 
+    onFacetsChanged(params){
+        debugger
+        this.handle_facets_checkbox(params);
+    }
+
+    // Handle Facets Click
+    handle_facets_checkbox(params){
+        // let param = {
+        //     checked: e.target.checked,
+        //     checked_key: this.props.checked_key,
+        // };
+        const checked_key = params.checked_key;
+        const checked = params.checked;
+        let cols = this.get_customized_columns(this.state.columns, checked_key, checked);
+        let facets = this.get_standard_facets(cols);
+
+        this.setState({
+            columns: cols,
+            facets: facets
+        });
+    };
 
     // Call to refresh data
     refresh_data() {
@@ -315,4 +336,4 @@ class SearchDataStore extends Reflux.Store{
 
 };
 
-export { SearchDataStore };
+export { SearchDataStore, SearchDataActions };
