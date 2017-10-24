@@ -1,0 +1,45 @@
+{
+  "columns":{
+    "sort": [
+      "@timestamp",
+      "de_host",
+      "de_source_address",
+      "de_destination_address",
+      "de_application_id",
+      "de_rule_name",
+      "de_action"
+    ],
+    "L10N": {
+      "de_url_category4": "de_url_category4",
+      "de_type": "de_type",
+      "de_direction": "de_direction",
+      "de_source_user": "de_source_user",
+      "de_action": "de_action",
+      "de_wrs_score": "de_wrs_score",
+      "de_url_category1": "de_url_category1",
+      "de_destination_address": "de_destination_address",
+      "de_url_category2": "de_url_category2",
+      "de_url_category3": "de_url_category3",
+      "de_url": "de_url",
+      "de_host": "de_host",
+      "de_source_port": "de_source_port",
+      "de_source_address": "de_source_address",
+      "host": "host",
+      "de_host_name": "de_host_name",
+      "de_file_name": "de_file_name",
+      "de_ips_rule": "de_ips_rule",
+      "de_rule_name": "de_rule_name",
+      "de_application_attribute_id": "de_application_attribute_id",
+      "de_log_time": "de_log_time",
+      "de_log_type": "de_log_type",
+      "de_protocol": "de_protocol",
+      "message": "message",
+      "de_destination_port": "de_destination_port",
+      "@timestamp": "@timestamp",
+      "de_application_id": "de_application_id",
+      "de_malware_name": "de_malware_name",
+      "de_mail_subject": "de_mail_subject",
+      "facility": "facility"
+    }
+  }
+}

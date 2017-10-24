@@ -6,61 +6,38 @@ import ResultTable from '../components/Search/ResultTable.jsx'
 import FacetsBar from '../components/Search/FacetsBar.jsx'
 import ResultHistogram from  '../components/Search/ResultHistogram.jsx'
 
+import {SearchDataStore} from '../Store/Search/SearchData.js'
+
 class Search extends React.Component{
 
     constructor(props) {
         super(props);
+        this.store = new SearchDataStore();
+        let columns = this.store.get_standard_columns();
+        let facets = this.store.get_standard_facets(columns);
+
         this.state = {
-            columns: [{
-                Header: 'Number',
-                accessor: 'number'
-            }],
-            data:[{
-                number:10
-            }],
-            whole_hits: 1000,
-            facets: [{
-                key: "log_type",
-                title: "log_type",
-                checked: true
-            }],
-            histogram:{
-                height: 160,
-                options:{
-                    scaleShowVerticalLines: false,
-                    scaleShowLabels : false,
-                    animation: false,
-                    responsive: true,
-                    scales: {
-                        xAxes: [{
-                            type: 'category',
-                            gridLines: {
-                                display:false,
-                            },
-                            categoryPercentage: 1.0,
-                            barPercentage: 0.9,
-                            lineHeight:20,
-                            display:false,
-                        }]
-                    },
-                    legend: {
-                        display: false
-                    }
-                },
-                data:{
-                    labels : [1],
-                    datasets : [
-                        {
-                            backgroundColor:"rgba(38,173,228,0.9)",
-                            data : [1]
-                        }
-                    ]
-                }
-            }
-        };
+            columns:columns,
+            data: this.store.getdata(),
+            whole_hits: 0,
+            facets:facets,
+            histogram: this.store.get_histogram()
+        }
+
     }
 
     componentDidMount() {
+        let _that = this;
+        _that.store.refresh_data(function (response) {
+            _that.setState({
+                data: response.hits.hits,
+                whole_hits: response.hits.total
+            })
+        },function (response) {
+            _that.setState({
+                histogram: response
+            });
+        });
     }
 
     componentWillUnmount() {
