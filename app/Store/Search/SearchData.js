@@ -1,3 +1,4 @@
+import Reflux from 'reflux';
 import Universal from '../Universal.js'
 
 const Helper = {
@@ -201,26 +202,43 @@ const Helper = {
 }
 
 
-class SearchDataStore{
+class SearchDataStore extends Reflux.Store{
 
     constructor() {
+        super();
+        let cols = this.get_standard_columns();
+        this.state = {
+            data: this.get_data(),
+            columns: cols,
+            facets: this.get_standard_facets(cols),
+            histogram: Helper.get_histogram(),
+            whole_hits : 0
+        };
+        this.listenables= [];
     }
 
     // Call to refresh data
-    refresh_data(callback_table, callback_histogram) {
+    refresh_data() {
+        let _that = this;
         Helper.search().then(function (response) {
-            callback_table(response);
+            _that.setState({
+                data: response.hits.hits,
+                whole_hits: response.hits.total
+            })
         });
         Helper.histogram().then(function (response) {
             let _config =  Helper.get_histogram(response.aggregations.x_data, response.aggregations.y_data);
-            callback_histogram(_config);
+            _that.setState({
+                histogram: _config
+            });
         })
     };
 
     // Get data for Table
-    getdata(){
+    get_data() {
+        this.refresh_data();
         return [];
-    }
+    };
 
     // Get cols for Table
     get_standard_columns(){
@@ -287,11 +305,6 @@ class SearchDataStore{
             return Helper.helper_sort(a.key, b.key);
         });
     }
-
-    // Get config fot Chart
-    get_histogram(){
-        return Helper.get_histogram();
-    };
 
 };
 
